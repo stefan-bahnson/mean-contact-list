@@ -1,12 +1,19 @@
 var app = angular.module('app', [])
     .controller('AppCtrl', ['$scope', '$http', function ($scope, $http) {
 
-        /***************** booleans *****************/
+        /***************** initialized vars *****************/
 
         /*
         *   edit mode on/off
         */
         $scope.isEditState = false;
+
+        /*
+        *   Search and sorting
+        */
+        $scope.sortType     = 'name'; // set the default sort type
+        $scope.sortReverse  = false;  // set the default sort order
+        $scope.search       = '';     // set the default search/filter term
 
         /***************** ajax *****************/
 
@@ -25,11 +32,11 @@ var app = angular.module('app', [])
                 });
         };
 
-        $scope.remove = function(contact, index){
+        $scope.remove = function(contact){
             $http.delete('/contactlist/' + contact._id)
                 .success(function(){
-                    $scope.contactlist.splice(index, 1);
-                    console.log(contact.name + " removed successfully...");
+                    $scope.contactlist.splice($scope.contactlist.indexOf(contact), 1);
+                    console.log(contact.name + " at index " + index + " removed successfully...");
                 });
         };
 
@@ -41,10 +48,10 @@ var app = angular.module('app', [])
                 });
         };
 
-        $scope.update = function (contact, index) {
+        $scope.update = function (contact) {
             $http.put('/contactlist/' + contact._id, contact)
                 .success(function(res) {
-                    $scope.contactlist.splice(index, 1, res);
+                    $scope.contactlist.splice($scope.contactlist.indexOf(contact), 1, res);
                     console.log(contact.name + " updated...");
                     clearInput()
                 });

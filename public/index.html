@@ -10,14 +10,70 @@
 </head>
 <body>
     <div class="container" ng-controller="AppCtrl">
-        <h1>MEAN Contact List</h1>
+
+        <h1 style="display: inline-block"> mean-contact-list </h1>
+
+        <ul class="list-group">
+            <li style="display: inline-block">
+                <div class="input-group"
+                     style="width: 278px;
+                     margin-left: 8px;
+                     top: 12px;">
+
+                    <span class="glyphicon glyphicon-search input-group-addon"
+                          style="top: 0;"></span>
+
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Search"
+                           ng-model="search" >
+                </div>
+            </li>
+            <li class="list-group-item"
+                style="display: inline-block"> $sortType = {{sortType}}
+            </li>
+            <li class="list-group-item"
+                style="display: inline-block"> $sortReverse = {{sortReverse}}
+            </li>
+            <li class="list-group-item"
+                style="display: inline-block"> search = {{search}}
+            </li>
+        </ul>
+
         <table class="table">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Number</th>
-                    <th>Action</th>
+                    <th>
+                        <a href="#"
+                           ng-click="sortType = 'name';
+                                    sortReverse = !sortReverse"> Name
+                        </a>
+                        <span class="glyphicon glyphicon-triangle-bottom"
+                              ng-show="sortType == 'name' && !sortReverse"></span>
+                        <span class="glyphicon glyphicon-triangle-top"
+                              ng-show="sortType == 'name' && sortReverse" ></span>
+                    </th>
+                    <th>
+                        <a href="#"
+                           ng-click="sortType = 'email';
+                                    sortReverse = !sortReverse"> Email
+                        </a>
+                        <span class="glyphicon glyphicon-triangle-bottom"
+                              ng-show="sortType == 'email' && !sortReverse" ></span>
+                        <span class="glyphicon glyphicon-triangle-top"
+                              ng-show="sortType == 'email' && sortReverse" ></span>
+                    </th>
+                    <th>
+                        <a href="#"
+                           ng-click="sortType = 'number';
+                                    sortReverse = !sortReverse"> Number
+                        </a>
+                        <span class="glyphicon glyphicon-triangle-bottom"
+                              ng-show="sortType == 'number' && !sortReverse" ></span>
+                        <span class="glyphicon glyphicon-triangle-top"
+                              ng-show="sortType == 'number' && sortReverse"></span>
+                    </th>
+                    <th> Action </th>
                 </tr>
             </thead>
             <tbody>
@@ -40,29 +96,34 @@
                 <td>
                     <button class="btn btn-primary"
                             ng-click="addContact(contact)"
-                            ng-hide="isEditState">Add Contact</button>
+                            ng-hide="isEditState"> Add Contact
+                    </button>
                     <button class="btn btn-primary"
                             ng-click="update(contact)"
-                            ng-show="isEditState">Update</button>
+                            ng-show="isEditState"> Update
+                    </button>
                 </td>
                 <td>
                     <button class="btn btn-danger"
                             ng-click="cancelEdit()"
-                            ng-show="isEditState">Cancel</button>
+                            ng-show="isEditState"> Cancel
+                    </button>
                 </td>
             </tr>
-            <tr ng-repeat="contact in contactlist">
-                <td>{{contact.name}}</td>
-                <td>{{contact.email}}</td>
-                <td>{{contact.number}}</td>
+            <tr ng-repeat="contact in contactlist | orderBy:sortType:sortReverse | filter:search">
+                <td> {{contact.name}} </td>
+                <td> {{contact.email}} </td>
+                <td> {{contact.number}} </td>
                 <td>
                     <button class="btn btn-danger"
-                            ng-click="remove(contact, $index)"
-                            ng-hide="isEditState">Remove</button>
+                            ng-click="remove(contact)"
+                            ng-hide="isEditState"> Remove
+                    </button>
                 </td>
                 <td>
                     <button class="btn btn-warning"
-                            ng-click="edit(contact)">Edit</button>
+                            ng-click="edit(contact)"> Edit
+                    </button>
                 </td>
             </tr>
             </tbody>
