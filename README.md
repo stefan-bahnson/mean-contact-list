@@ -14,8 +14,7 @@ now for some error handling ;)
 ### Project Setup
 1. Clone or download the project from the repository into your directory of choice.
 
-2. Open your terminal and navigate to the root of the project directory and type **"npm install"**.  
-This will install all dependencies.
+2. Open your terminal and navigate to the root of the project directory and type **"npm install"** to install all dependencies.
 
 3. Install MongoDB https://www.mongodb.org/ _(Skip this step if you allready have MongoDB installed)_
 
